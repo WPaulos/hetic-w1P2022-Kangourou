@@ -620,12 +620,13 @@ function playAudio(str) {
 
 // DECOR
 function loadGameBg() {
-  const question = document.getElementById("question");
-  const story = document.getElementById("story");
   const controls = document.getElementById("controls");
 
-  question.addEventListener("click", () => {
-    controls.classList.toggle("hidden-display");
+  window.addEventListener("keydown", e => {
+    if (e.which === 72) {
+      console.log("test");
+      controls.classList.toggle("hidden-display");
+    }
   });
 }
 
