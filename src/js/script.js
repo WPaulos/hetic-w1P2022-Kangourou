@@ -22,7 +22,6 @@ let gridLvl1Av = [
   [1, 0, 0, 2, 2, 0, 1, 1, 1, 0],
   [6, 0, 0, 0, 0, 2, 0, 0, 1, 0]
 ];
-console.log("OUTPUT: gridLvl1Av", gridLvl1Av);
 
 let gridLvl1Ap = [
   [7, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -152,7 +151,6 @@ function getClass(x) {
 function swapKangooTo(oldGrid, grid) {
   let oldPos = fetchInGrid(oldGrid, 6);
   let posKangoo = fetchInGrid(grid, 6);
-  console.log(posKangoo);
   let oldRow = oldPos[0];
   let oldColumn = oldPos[1];
   let kangooRow = posKangoo[0];
@@ -216,14 +214,12 @@ function switchScreen() {
     oldGrid = gridAp;
     currentGrid = gridAv;
     element = avant;
-    console.log("current map is " + screen);
     swapKangooTo(oldGrid, currentGrid);
     initControls(currentGrid, element);
   } else {
     oldGrid = gridAv;
     currentGrid = gridAp;
     element = apres;
-    console.log("current map is " + screen);
     swapKangooTo(oldGrid, currentGrid);
     initControls(currentGrid, element);
   }
@@ -384,7 +380,6 @@ function initGame() {
 }
 
 function initControls(grid, element) {
-  console.log("run");
   oxo.inputs.listenKeys(["up", "down", "left", "right"], function(key) {
     if (!gameIsOver) moveKangoo(key, grid, element);
   });
@@ -459,7 +454,6 @@ let limit = 0;
 
 function resetLifebar() {
   limit = 0;
-  console.log(limit);
   const lifebar = document.getElementById("life");
   lifebar.style.transform = `translateY(${limit}px)`;
   if (lifebar.classList.contains("blink")) lifebar.style.animation = "";
@@ -468,9 +462,7 @@ function resetLifebar() {
 function loadLvl1() {
   displayLvlText(1);
   gridAv = gridLvl1Av;
-  console.log("OUTPUT: gridLvl1Av", gridLvl1Av);
   gridAp = gridLvl1Ap;
-  console.log(gridAv);
   resetLifebar();
   console.log("LEVEL 1 LOADED");
 }
@@ -479,8 +471,6 @@ function loadLvl2() {
   displayLvlText(2);
   gridAv = gridLvl2Av;
   gridAp = gridLvl2Ap;
-  console.log(gridAv);
-  console.log(gridAp);
   let avant = document.getElementById("avant");
   loadGrid(gridAv, avant);
   resetScreen();
@@ -506,6 +496,9 @@ function levelCompleted() {
     lvl3Comp = true;
     oxo.screens.loadScreen("endgame", function() {
       playAudio("win");
+      oxo.inputs.listenKey("enter", function() {
+        window.location.reload();
+      });
     });
   } else if (lvl1Comp) {
     lvl2Comp = true;
@@ -625,7 +618,6 @@ function loadGameBg() {
 
   window.addEventListener("keydown", e => {
     if (e.which === 72) {
-      console.log("test");
       controls.classList.toggle("hidden-display");
     }
   });
@@ -636,7 +628,7 @@ function gameOver() {
   setTimeout(() => {
     oxo.screens.loadScreen("gameover", function() {
       playAudio("lose");
-      oxo.inputs.listenKey("space", function(key) {
+      oxo.inputs.listenKey("enter", function(key) {
         window.location.reload();
       });
     });
