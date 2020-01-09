@@ -10,6 +10,7 @@
 
 let gridAv = [];
 let gridAp = [];
+
 let gridLvl1Av = [
   [7, 0, 0, 1, 0, 0, 0, 0, 0, 0],
   [0, 0, 1, 1, 0, 1, 0, 1, 0, 0],
@@ -491,6 +492,20 @@ function loadLvl3() {
   console.log("LEVEL 3 LOADED");
 }
 
+function reloadLvl2() {
+  displayLvlText(2);
+  gridAv = gridLvl2Av;
+  gridAp = gridLvl2Ap;
+  console.log("LEVEL 2 LOADED");
+}
+
+function reloadLvl3() {
+  displayLvlText(3);
+  gridAv = gridLvl3Av;
+  gridAp = gridLvl3Ap;
+  console.log("LEVEL 3 LOADED");
+}
+
 function levelCompleted() {
   if (lvl1Comp && lvl2Comp) {
     lvl3Comp = true;
@@ -508,6 +523,16 @@ function levelCompleted() {
     lvl1Comp = true;
     loadLvl2();
     // LOAD LVL 2
+  }
+}
+
+function storageLvl() {
+  if (lvl1Comp && lvl2Comp) {
+    return "3";
+  } else if (lvl1Comp) {
+    return "2";
+  } else {
+    return "1";
   }
 }
 
@@ -629,6 +654,8 @@ function gameOver() {
     oxo.screens.loadScreen("gameover", function() {
       playAudio("lose");
       oxo.inputs.listenKey("enter", function(key) {
+        let storage = storageLvl();
+        window.sessionStorage.setItem("level", storage);
         window.location.reload();
       });
     });
@@ -642,11 +669,32 @@ oxo.screens.loadScreen("home", function() {
     oxo.screens.loadScreen("game", function() {
       let avant = document.getElementById("avant");
       let apres = document.getElementById("apres");
-      loadLvl1();
+
+      if (window.sessionStorage.getItem("level")) {
+        let key = window.sessionStorage.getItem("level");
+        console.log(key);
+        switch (key) {
+          case "2":
+            lvl1Comp = true;
+            reloadLvl2();
+            console.log("putes");
+            break;
+          case "3":
+            lvl1Comp = true;
+            lvl2Comp = true;
+            reloadLvl3();
+            break;
+          default:
+            break;
+        }
+      } else {
+        loadLvl1();
+      }
       initGame();
       loadGameBg();
       initControls(gridAv, avant);
       spaceSwitchScreens();
+      console.log(window.sessionStorage.getItem("level"));
     });
   });
 });
