@@ -506,6 +506,13 @@ function reloadLvl3() {
   console.log("LEVEL 3 LOADED");
 }
 
+function reloadLvl1() {
+  displayLvlText(1);
+  gridAv = gridLvl1Av;
+  gridAp = gridLvl1Ap;
+  console.log("LEVEL 1 LOADED");
+}
+
 function levelCompleted() {
   if (lvl1Comp && lvl2Comp) {
     lvl3Comp = true;
@@ -681,6 +688,9 @@ oxo.screens.loadScreen("home", function() {
             lvl1Comp = true;
             lvl2Comp = true;
             reloadLvl3();
+            break;
+          case "1":
+            reloadLvl1();
             break;
           default:
             break;
