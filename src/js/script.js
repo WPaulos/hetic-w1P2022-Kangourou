@@ -672,12 +672,10 @@ oxo.screens.loadScreen("home", function() {
 
       if (window.sessionStorage.getItem("level")) {
         let key = window.sessionStorage.getItem("level");
-        console.log(key);
         switch (key) {
           case "2":
             lvl1Comp = true;
             reloadLvl2();
-            console.log("putes");
             break;
           case "3":
             lvl1Comp = true;
