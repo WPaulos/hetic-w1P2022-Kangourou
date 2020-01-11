@@ -13,7 +13,6 @@ Attar Ramtim
 
 
 ## We are using a library called Oxo : https://github.com/bcalou/oxo-game-boilerplate
-    - [`data-oxo-movable`](#-data-oxo-movable)
 
 ## How to use
 
